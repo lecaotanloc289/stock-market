@@ -22,8 +22,12 @@ const SignIn = () => {
     data: SignInFormData
   ) => {
     try {
-      console.log(data);
-    } catch (error) {}
+      // TODO: Implement actual authentication logic
+      // await signIn(data);
+    } catch (error) {
+      // TODO: Handle authentication errors and show user feedback
+      console.error("Sign in failed:", error);
+    }
   };
   return (
     <div className="h-full">
@@ -38,8 +42,10 @@ const SignIn = () => {
           error={errors.email}
           validation={{
             required: "Email is required",
-            pattern: /^\w+@\w+\.\w+$/,
-            message: "Email address is required",
+            pattern: {
+              value: /^\w@\w\.\w$/,
+              message: "Invalid email format",
+            },
           }}
         />
         <InputField
