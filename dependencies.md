@@ -16,3 +16,9 @@ pnpm dlx shadcn@latest add input label select
 ```
 pnpm i mongodb mongoose
 ```
+- Add better-auth
+```
+pnpm i better-auth
+```
+- Add Inngest
+pnpm dlx inngest-cli@latest dev
