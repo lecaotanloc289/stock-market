@@ -2,14 +2,17 @@
 import FooterLink from "@/components/forms/FooterLink";
 import InputField from "@/components/forms/InputField";
 import { Button } from "@/components/ui/button";
+import { signInWithEmail } from "@/lib/actions/auth.action";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const SignIn = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors, isSubmitting },
   } = useForm<SignInFormData>({
     defaultValues: {
@@ -21,18 +24,23 @@ const SignIn = () => {
   const onSubmit: SubmitHandler<SignInFormData> = async (
     data: SignInFormData
   ) => {
+    console.log("first");
     try {
-      // TODO: Implement actual authentication logic
-      // await signIn(data);
+      const result = await signInWithEmail(data);
+      console.log(result);
+      if (result.success) router.push("/");
     } catch (error) {
-      // TODO: Handle authentication errors and show user feedback
       console.error("Sign in failed:", error);
+      toast.error("Sign in failed", {
+        description:
+          error instanceof Error ? error.message : "Failed to sign in",
+      });
     }
   };
   return (
-    <div className="h-full">
+    <>
       <h1 className="form-title mt-8">Welcome back</h1>
-      <form action="" onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <InputField
           name="email"
           label="Enter your email"
@@ -42,10 +50,7 @@ const SignIn = () => {
           error={errors.email}
           validation={{
             required: "Email is required",
-            pattern: {
-              value: /^\w@\w\.\w$/,
-              message: "Invalid email format",
-            },
+            pattern: /^\w+@\w+\.\w+$/,
           }}
         />
         <InputField
@@ -70,7 +75,7 @@ const SignIn = () => {
           href="/sign-up"
         />
       </form>
-    </div>
+    </>
   );
 };
 export default SignIn;

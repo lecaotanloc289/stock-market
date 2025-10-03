@@ -4,15 +4,19 @@ import FooterLink from "@/components/forms/FooterLink";
 import InputField from "@/components/forms/InputField";
 import SelectField from "@/components/forms/SelectField";
 import { Button } from "@/components/ui/button";
+import { signUpWithEmail } from "@/lib/actions/auth.action";
 import {
   INVESTMENT_GOALS,
   PREFERRED_INDUSTRIES,
   RISK_TOLERANCE_OPTIONS,
 } from "@/lib/constant";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const SignUp = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -30,17 +34,29 @@ const SignUp = () => {
     },
     mode: "onBlur",
   });
+
   const onSubmit: SubmitHandler<SignUpFormData> = async (
     data: SignUpFormData
   ) => {
     try {
-      console.log(data);
-    } catch (error) {}
+      const result = await signUpWithEmail(data);
+      if (result?.success) {
+        router.push("/");
+      }
+      console.log(result);
+    } catch (error) {
+      toast.error("Sign up failed", {
+        description:
+          error instanceof Error
+            ? error.message
+            : "Failed to create an account.",
+      });
+    }
   };
   return (
     <div className="h-full">
       <h1 className="form-title mt-8">Sign Up & Personalize</h1>
-      <form action="" onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <InputField
           name="fullName"
           label="Full Name"
@@ -62,13 +78,6 @@ const SignUp = () => {
             message: "Email address is required",
           }}
         />
-        <CountrySelectField
-          name="country"
-          label="Country"
-          control={control}
-          error={errors.country}
-          required
-        />
         <InputField
           name="password"
           label="Password"
@@ -77,6 +86,13 @@ const SignUp = () => {
           register={register}
           error={errors.password}
           validation={{ required: "Password is required", minLength: 8 }}
+        />
+        <CountrySelectField
+          name="country"
+          label="Country"
+          control={control}
+          error={errors.country}
+          required
         />
 
         <SelectField
