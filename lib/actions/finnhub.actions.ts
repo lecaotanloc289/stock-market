@@ -2,7 +2,7 @@
 "use server";
 
 import { getDateRange, validateArticle, formatArticle } from "@/lib/utils";
-import { POPULAR_STOCK_SYMBOLS } from "@/lib/constant";
+import { POPULAR_STOCK_SYMBOLS } from "@/lib/constants";
 import { cache } from "react";
 
 const FINNHUB_BASE_URL = "https://finnhub.io/api/v1";
