@@ -26,7 +26,10 @@ const SignIn = () => {
   ) => {
     try {
       const result = await signInWithEmail(data);
-      if (result.success) router.push("/");
+      if (result.success) {
+        toast.success("Login successfully!");
+        router.push("/");
+      }
     } catch (error) {
       console.error("Sign in failed:", error);
       toast.error("Sign in failed", {
@@ -48,7 +51,10 @@ const SignIn = () => {
           error={errors.email}
           validation={{
             required: "Email is required",
-            pattern: /^\w+@\w+\.\w+$/,
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
+              message: "Please enter a valid email address",
+            },
           }}
         />
         <InputField
