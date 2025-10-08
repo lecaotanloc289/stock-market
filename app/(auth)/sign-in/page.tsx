@@ -2,7 +2,7 @@
 import FooterLink from "@/components/forms/FooterLink";
 import InputField from "@/components/forms/InputField";
 import { Button } from "@/components/ui/button";
-import { signInWithEmail } from "@/lib/actions/auth.action";
+import { signInWithEmail } from "@/lib/actions/auth.actions";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -24,10 +24,8 @@ const SignIn = () => {
   const onSubmit: SubmitHandler<SignInFormData> = async (
     data: SignInFormData
   ) => {
-    console.log("first");
     try {
       const result = await signInWithEmail(data);
-      console.log(result);
       if (result.success) router.push("/");
     } catch (error) {
       console.error("Sign in failed:", error);
