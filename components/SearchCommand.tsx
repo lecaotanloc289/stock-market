@@ -8,7 +8,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import Link from "next/link";
-import { Loader2, Star, TrendingUp } from "lucide-react";
+import { Loader2, TrendingUp } from "lucide-react";
 import { searchStocks } from "@/lib/actions/finnhub.actions";
 import { useDebounce } from "@/hooks/useDebounce";
 
