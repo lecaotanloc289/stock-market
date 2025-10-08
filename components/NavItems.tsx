@@ -1,5 +1,5 @@
 "use client";
-import { NAV_ITEMS } from "@/lib/constant";
+import { NAV_ITEMS } from "@/lib/constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SearchCommand from "./SearchCommand";
