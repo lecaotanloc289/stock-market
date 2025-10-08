@@ -4,7 +4,7 @@ import FooterLink from "@/components/forms/FooterLink";
 import InputField from "@/components/forms/InputField";
 import SelectField from "@/components/forms/SelectField";
 import { Button } from "@/components/ui/button";
-import { signUpWithEmail } from "@/lib/actions/auth.action";
+import { signUpWithEmail } from "@/lib/actions/auth.actions";
 import {
   INVESTMENT_GOALS,
   PREFERRED_INDUSTRIES,
@@ -43,8 +43,8 @@ const SignUp = () => {
       if (result?.success) {
         router.push("/");
       }
-      console.log(result);
     } catch (error) {
+      console.error("Sign up failed", error);
       toast.error("Sign up failed", {
         description:
           error instanceof Error
