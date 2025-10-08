@@ -22,11 +22,19 @@ export const getAllUserForNewsEmail = async () => {
       .toArray();
     return users
       .filter((user) => user.email && user.name)
-      .map((user) => ({
-        id: user.id || user._id.toString() || "",
-        email: user.email,
-        name: user.name,
-      }));
+      .map((user) => {
+        const id =
+          typeof user.id === "string" && user.id.trim()
+            ? user.id
+            : user._id
+            ? String(user._id)
+            : "";
+        return {
+          id,
+          email: String(user.email),
+          name: String(user.name),
+        };
+      });
   } catch (error) {
     console.error("Error fetching user for news email!", error);
     return [];

@@ -1,4 +1,4 @@
-import { model, Model, models, Schema } from "mongoose";
+import { model, Model, models, Schema, Document } from "mongoose";
 
 export interface WatchlistItem extends Document {
   userId: string;
